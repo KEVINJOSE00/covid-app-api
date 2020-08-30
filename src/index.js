@@ -1,12 +1,15 @@
 const express = require('express')
 require('./db/mongoose')
 const Data = require('./models/data')
-
+const Emp = require('./models/employee')
+const userRouter = require('./routers/employee')
 const app = express()
 const port = process.env.PORT || 3000
 
 
 app.use(express.json())
+app.use(userRouter)
+
 
 
 
@@ -61,6 +64,49 @@ app.get('/data', (req, res) =>{
 })
 
 
+app.post('/emp', (req, res) =>{
+    const emp = new Emp(req.body)
+
+    emp.save().then(() => {
+        res.send(emp)
+    }).catch((e) =>{
+        res.status(400).send(e)
+    })
+})
+
+app.get('/emp', (req, res) =>{
+    Emp.find({}).then((emps) =>{
+        res.send(emps)
+    }).catch((e) =>{
+        res.status(500).send()
+    })
+})
+
+app.get('/emp/:id', (req, res) =>{
+    const _id = req.params.id
+
+    Emp.findById(_id).then((emp) =>{
+        if(!emp){
+            return res.status(404).send()
+        }
+        res.send(emp)
+    })
+})
+
+app.patch('/emp/:id', (req, res) => {
+    
+    try{
+        const emp = Emp.findByIdAndUpdate(req.params.id, req.body, {new : true, runValidators : true})
+
+        if(!emp) {
+            return res.status(404).send()
+        }
+
+    } catch (e) {
+        res.status(400).send()
+    }
+
+})
 
 
 
