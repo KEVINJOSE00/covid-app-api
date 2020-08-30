@@ -50,9 +50,14 @@ const Data   = mongoose.model('Count', {
              if(value>739 || value<0){
                  throw new Error('District id must be less than 739 and greater than zero')
              }
-         }
-
+         },
+     
     },
+    status :{
+        type : String,
+        required : true,
+        default : "risk"
+     },
     adjacent_district : {
         type : Array,
         required :true,
