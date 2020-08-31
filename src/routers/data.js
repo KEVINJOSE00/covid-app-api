@@ -21,6 +21,19 @@ router.post('/data', (req, res ) =>{
             data.status ="High risk"
         }
     
+   
+//    var adjacent_district_string = data.adjacent_district
+//     var adjacent_district = adjacent_district_string.split(" ")
+//     console.log(adjacent_district)
+//     length = adjacent_district.length
+   
+//     for (i=0; i<length; i++)
+//     {
+//     Data.find({district_id :adjacent_district[i]}).then((adj_data) =>{
+//         console.log(adj_data)
+//     })
+//    }
+    
     data.save().then(() =>{
        res.send(data)
 
@@ -41,6 +54,23 @@ router.patch('/data/:id', async (req, res) =>{
         }
 
         res.send(data)
+        var adjacent_district_string = data.adjacent_district
+        var adjacent_district = adjacent_district_string.split(" ")
+        
+        length = adjacent_district.length
+        
+        for(i=0; i<length; i++)
+
+        {
+        Data.find({district_id :adjacent_district[i]}).then((adj_data) =>{
+                  console.log(adj_data)
+         })
+    
+        }
+
+
+
+
     } catch(e){
         res.status(400).send(e)
     }
@@ -53,6 +83,10 @@ router.get('/data', (req, res) =>{
     }).catch((e) =>{
         res.status(500).send()
     })
-})
+
+   
+
+
+    })
 
 module.exports = router

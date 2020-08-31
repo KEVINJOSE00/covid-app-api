@@ -59,7 +59,7 @@ const Data   = mongoose.model('Count', {
         default : "risk"
      },
     adjacent_district : {
-        type : Array,
+        type : String,
         required :true,
         
 
