@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const Emp   = mongoose.model('Emp', {
+
+const employeeSchema = new mongoose.Schema({
     email : {
         type : String,
         required : true,
@@ -32,6 +33,12 @@ const Emp   = mongoose.model('Emp', {
     }
     
 })
+
+
+
+
+
+const Emp   = mongoose.model('Emp', employeeSchema )
 
  
 
