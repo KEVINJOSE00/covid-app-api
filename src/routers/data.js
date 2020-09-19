@@ -1,10 +1,7 @@
 const express = require('express')
 
 const Data = require("../models/data")
-const { count } = require('../models/data')
 const router = new express.Router()
-
-
 
 
 router.post('/data', (req, res ) =>{
@@ -25,7 +22,7 @@ router.post('/data', (req, res ) =>{
          }
        
         
-         var adjacent_district_string = data.adjacent_district
+        var adjacent_district_string = data.adjacent_district
          //console.log(adjacent_district_string)
         var adjacent_district = adjacent_district_string.split(" ")
         
@@ -43,46 +40,31 @@ router.post('/data', (req, res ) =>{
                   }
                 
             })
-            
         }
-        
-    data.save().then(() =>{
-       res.send(data)
-
-    
-    }).catch(() => {
-        res.status(400).send(e)
+        data.save().then(() =>{
+            res.send(data)
+        }).catch(() => {
+            res.status(400).send(e)
+        })
     })
- })
 
-
-
-router.patch('/data/:id', async (req, res) =>{
-    try{
-        const data = await Data.findByIdAndUpdate(req.params.id, req.body, { new : true, runValidators : true })
-        
-        if(!data){
+    router.patch('/data/:id', async (req, res) =>{
+        try{
+            const data = await Data.findByIdAndUpdate(req.params.id, req.body, { new : true, runValidators : true })
+            if(!data){
             return res.status(404).send()
         }
-
-        res.send(data)
-        
-    } catch(e){
+             res.send(data)
+        } catch(e){
         res.status(400).send(e)
-    }
-})
-
-
-router.get('/data', (req, res) =>{
-    Data.find({}).then((data) =>{
-        res.send(data)
-    }).catch((e) =>{
-        res.status(500).send()
+        }
     })
 
-   
-
-
+    router.get('/data', (req, res) =>{
+        Data.find({}).then((data) =>{
+            res.send(data)
+        }).catch((e) =>{
+            res.status(500).send()
+        })
     })
-
 module.exports = router

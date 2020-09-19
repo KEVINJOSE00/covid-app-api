@@ -1,7 +1,7 @@
 
 const path = require('path')
 const express = require('express')
-const hbs = require('hbs')
+//const hbs = require('hbs')
 require('./db/mongoose')
 
 const empRouter = require('./routers/employee')
@@ -20,6 +20,13 @@ app.use(express.static(publicDirectoryPath))
 app.use(express.json())
 app.use(empRouter)
 app.use(dataRouter)
+
+
+app.get('', (req, res) =>{
+    res.render('index')
+})
+
+
 
 app.listen(port, () =>{
     console.log('Server is on port ' + port )
